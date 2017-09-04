@@ -21,8 +21,14 @@
 				?><meta name="<?php echo $name; ?>" content="<?php echo is_array($content) ? implode(", ", $content) : $content; ?>" /><?php
 		 }
 	?>
+<?php $this->load->view('template/head') ?>
 </head>
 <body>
+
+
+<?php $this->load->view('template/navbar') ?>
+<?php $this->load->view('template/flashdata_response') ?>
+
 <?php echo $output;?>
 </body>
 </html>
