@@ -7,9 +7,17 @@ class Action extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('validate');
+		$this->load->model('get');
 		$this->load->library('form_validation');
 		$this->load->library('auth');
 
+	}
+
+	public function autocomplete($table, $query = false)
+	{
+		$response = $this->get->$table(urldecode($query));
+
+		echo json_encode($response);
 	}
 
 	public function login()
@@ -31,7 +39,6 @@ class Action extends CI_Controller {
 
 		_redirect();
 	}
-
 
 	public function logout()
 	{

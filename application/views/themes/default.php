@@ -24,11 +24,9 @@
 <?php $this->load->view('template/head') ?>
 </head>
 <body>
-
-
 <?php $this->load->view('template/navbar') ?>
 <?php $this->load->view('template/flashdata_response') ?>
-
 <?php echo $output;?>
+<?php $this->load->view('template/jquery') ?>
 </body>
 </html>
