@@ -20,6 +20,32 @@ class Main extends CI_Controller {
 		$this->load->view('main');
 	}
 
-	
+	public function action()
+	{
+		
+		$old_dentist = $this->db->get('product')->result();
+			
+
+		$this->_init();
+
+		foreach ($old_dentist as $key => $value) {
+			
+				
+				$new_data = array(
+				
+					'productId' => $value->product_id,
+					'name'=> $value->product_name,
+					'description' => $value->product_description,
+					'lot' => $value->lot_number,
+					'active'=> $value->active
+
+				);
+
+				//$this->db->insert('products', $new_data);
+
+			
+		}
+
+	}
 
 }

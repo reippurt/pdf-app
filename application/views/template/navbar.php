@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg  navbar-dark bg-primary">
 	
 	<a class="navbar-brand" href="<?php echo base_url() ?>">Start</a>
 
@@ -20,6 +20,17 @@
 					<a class="dropdown-item" href="#">Tilføj tandtekniker</a>
 					
 				</div>
+			</li>
+
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Dropdown link
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			<a class="dropdown-item" href="#">Action</a>
+			<a class="dropdown-item" href="#">Another action</a>
+			<a class="dropdown-item" href="#">Something else here</a>
+			</div>
 			</li>
 
 		</ul>

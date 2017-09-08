@@ -6,7 +6,7 @@
 	</div>
 	<div class="row">
 
-		<div class="col-md-12">
+		<div class="col-md-12 bg-white pt20 pb20">
 
 
 			<table class="table table-striped datatable">
@@ -23,16 +23,18 @@
 				<tbody>
 					<?php if($declerations) { foreach ($declerations as $key => $value) { ?>
 						
-						<tr>
-							<td><?php echo $value->declerationId ?></td>
+						<tr class="active-<?php echo $value->active ?>">
+							<td>
+								<a class="btn btn-sm" href="<?php echo base_url('decleration/id/'.$value->declerationId) ?>"><?php echo $value->declerationId ?></a>
+							</td>
 							<td><?php echo date('d-m-y', $value->declerationPostTimestamp) ?></td>
 							<td>
-								<p class="mb0"><?php echo $value->name ?></p>
-								<p class="mb0 fs12"><?php echo $value->birthday . "-" . $value->ssn ?></p>
+								<p class="mb0"><?php echo $value->patientName ?></p>
+								<p class="mb0 fs12"><?php echo $value->birthDate . "-" . $value->ssn ?></p>
 							</td>
 							<td><?php echo $value->workerName ?></td>
 							<td><?php echo $value->dentistName ?></td>
-							<td><?php echo $value->number ?></td>
+							<td><?php echo $value->lot ?></td>
 							<td>
 								<p class="mb0"><?php echo date('d-m-y', strtotime($value->deliveryDate)) . " kl. " . $value->deliveryTime ?></p>
 								<p class="mb0 fs12"><?php echo $value->deliveryTypeName ?></p>
@@ -52,4 +54,3 @@
 		
 	</div>
 </div>
-

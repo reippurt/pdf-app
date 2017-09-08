@@ -9,7 +9,7 @@
 					<div class="card-header">
 						<i class="fa fa-lock"></i> Log ind
 					</div>
-					<div class="card-block">
+					<div class="card-body">
 						<?php $this->load->view('forms/login') ?>
 					</div>
 				</div>

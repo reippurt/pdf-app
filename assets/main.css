@@ -1,3 +1,24 @@
+.note-block{
+  border-bottom:1px solid #eee;
+  margin-bottom: 15px;
+}
+.note-block:last-child{
+  border-bottom: 0px;
+}
+
+body, html {
+    padding: 0;
+    margin: 0;
+    background-color: #e9ebee;
+}
+
+
+
+
+.active-0 td{
+  text-decoration: line-through;
+}
+
 .dropdown-toggle::after{
 	display:none;
 }
@@ -505,7 +526,7 @@ body {
 
 .tt-menu {
   width: 100%;
-  margin: 12px 0;
+  margin: 0;
   padding: 8px 0;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -513,15 +534,19 @@ body {
   -webkit-border-radius: 8px;
      -moz-border-radius: 8px;
           border-radius: 8px;
+          border-top-left-radius: 0px;
+          border-top-right-radius: 0px;
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
      -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
           box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          
+
 }
 
 .tt-suggestion {
   padding: 3px 20px;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 11px;
+  line-height: 1;
 }
 
 .tt-suggestion:hover {

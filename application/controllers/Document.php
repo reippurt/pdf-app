@@ -11,6 +11,7 @@ class Document extends CI_Controller {
 		_is_logged();
 
 		$this->load->model('get');
+		$this->load->model('handle');
 	}
 
 	public function _init()

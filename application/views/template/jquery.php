@@ -1,8 +1,20 @@
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	$(".confirm-form-submit").click(function(e){
+		e.preventDefault();
+		if(confirm('Er du sikker på denne handling?')){
+			$(this).closest('form').submit();
+		}
+	});
+
+
+	$(".click-remove").click(function(){
+		$(this).remove();
+	});
 
 	$('.datepicker').datepicker({
-		format: "dd-mm-yyyy",
+		format: "yyyy-mm-dd",
 		weekStart: 1,
 		language: "da",
 		autoclose: true,
@@ -12,6 +24,16 @@ $(document).ready(function(){
 
 
 
+	var products = new Bloodhound({
+		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		prefetch: '<?php echo base_url("action/autocomplete/products") ?>',
+		remote: {
+			url: '<?php echo base_url("action/autocomplete/products/%QUERY") ?>',
+			wildcard: '%QUERY'
+		}
+	});
+	
 	var workers = new Bloodhound({
 		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -22,61 +44,114 @@ $(document).ready(function(){
 		}
 	});
 	
-	var dentists = new Bloodhound({
-		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		prefetch: '<?php echo base_url("action/autocomplete/dentists") ?>',
-		remote: {
-			url: '<?php echo base_url("action/autocomplete/dentists/%QUERY") ?>',
-			wildcard: '%QUERY'
-		}
-	});
 
 	var patients = new Bloodhound({
 		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		prefetch: '<?php echo base_url("action/autocomplete/patients") ?>',
+		prefetch: '<?php echo base_url("action/autocomplete/patients/") ?>',
 		remote: {
 			url: '<?php echo base_url("action/autocomplete/patients/%QUERY") ?>',
 			wildcard: '%QUERY'
 		}
 	});
 
-	$('.lookup-workers').typeahead(null, {
-		name: 'name',
+	
+
+
+	var dentists = new Bloodhound({
+		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		prefetch: '<?php echo base_url("action/autocomplete/dentists/") ?>',
+		remote: {
+			url: '<?php echo base_url("action/autocomplete/dentists/%QUERY") ?>',
+			wildcard: '%QUERY'
+		}
+	});
+
+
+
+	// Typeahead lookup workers	
+	$('.lookup-workers').typeahead({
+		minLength: 0,
+		highlight: true
+	},
+	{
 		limit: 'Infinity',
+		name: 'name',
 		display: 'name',
 		source: workers
 	}).bind('typeahead:select', function(ev, suggestion) {
 
-		console.log(suggestion);
+		$("#workerId").val(suggestion.workerId);
+		$(this).blur();
 
-	});;
+	});
 
+	
+	// Typeahead lookup dentists
+	$('.lookup-dentists').typeahead({
+		minLength: 0,
+		highlight: true,
 
-	$('.lookup-dentists').typeahead(null, {
-		name: 'name',
+	},
+	{
 		limit: 'Infinity',
+		name: 'name',
 		display: 'name',
 		source: dentists
 	}).bind('typeahead:select', function(ev, suggestion) {
+		$("#dentistId").val(suggestion.dentistId);
+		$(this).blur();
 
-		console.log(suggestion);
+	});
 
-	});;
-	
-	$('.lookup-patients').typeahead(null, {
-		name: 'name',
+
+
+
+
+	$('.lookup-products').typeahead({
+		minLength: 0,
+		highlight: true
+	},
+	{
 		limit: 'Infinity',
+		name: 'name',
+		display: 'name',
+		source: products
+	}).bind('typeahead:select', function(ev, suggestion) {
+
+		
+		$(this).closest(".form-group").find('.productId').val(suggestion.productId);
+
+	});
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+	$('.lookup-patients').typeahead({
+		minLength: 0,
+		highlight: true
+	},
+	{
+		limit: 'Infinity',
+		name: 'name',
 		display: 'name',
 		source: patients
 	}).bind('typeahead:select', function(ev, suggestion) {
 
-		console.log(suggestion);
+		$(this).blur();
 
-	});;
-
-
+	});
 
 
 
