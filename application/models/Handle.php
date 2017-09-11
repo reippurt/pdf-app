@@ -14,6 +14,7 @@ Class Handle extends CI_Model{
 			$tmp['products'] = $this->get->dProducts($declerations->declerationId);
 
 			$result = (object)$tmp;
+
 		}
 		else
 		{
@@ -26,7 +27,7 @@ Class Handle extends CI_Model{
 				
 				$result[] = (object)$tmp;	
 			}
-	
+		
 		}
 
 		return $result;

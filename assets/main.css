@@ -1,6 +1,15 @@
+.card-sm .card-body{
+  padding: 10px;
+}
+
+.table-delivery tr td{ 
+  font-size: 11px;
+}
+
 .note-block{
   border-bottom:1px solid #eee;
   margin-bottom: 15px;
+  padding-bottom: 15px;
 }
 .note-block:last-child{
   border-bottom: 0px;

@@ -20,7 +20,7 @@
 
 					<div class="form-group">
 						<select type="text" id="deliveryTypeId" name="note" class="form-control form-control-sm">
-							<option>Vælg levering</option>
+							<option value="<?php echo $decleration->deliveryTypeId ?>"><?php echo $decleration->deliveryTypeName ?></option>
 							<option value="1">GLS</option>
 							<option value="2">Bud</option>
 						</select>
@@ -29,14 +29,14 @@
 					<div class="form-group">
 						<div class="input-group date datepicker" style="padding:0px;">
 							<span class="input-group-addon input-sm"><i class="fa fa-calendar"></i></span>
-							<input type="text" id="deliveryDate" class="form-control form-control-sm bg-white" name="deliveryDate"  placeholder="Dato">
+							<input type="text" id="deliveryDate" class="form-control form-control-sm bg-white" name="deliveryDate"  placeholder="Dato" value="<?php echo $decleration->deliveryDate; ?>">
 						</div>
 					</div>	
 
 					<div class="form-group mb0">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-							<input type="text" id="deliveryTime" name="eventTime" class="form-control form-control-sm" placeholder="Klokke">
+							<input type="text" id="deliveryTime" name="eventTime" class="form-control form-control-sm" placeholder="Klokke" value="<?php echo $decleration->deliveryTime ?>">
 						</div>
 					</div>
 
@@ -68,50 +68,55 @@
 									$workerName = get_cookie('signature_name'); 
 								} ?>
 
-								<input type="text" id="workerName" class="form-control form-control-sm lookup-workers" placeholder="Tekniker" value="<?php echo $workerName ?>">
-								<input type="hidden" id="workerId" value="<?php echo $workerId ?>">
+								<input type="text" id="workerName" class="form-control form-control-sm lookup-workers" placeholder="Tekniker" value="<?php echo $decleration->workerName ?>">
+								<input type="hidden" id="workerId" value="<?php echo $decleration->workerId ?>">
 							</div>
 
 							<div class="form-group">
-								<input type="text" id="dentistName" class="form-control form-control-sm lookup-dentists " placeholder="Tandlæge">
-								<input type="hidden" id="dentistId">
+								<input type="text" id="dentistName" class="form-control form-control-sm lookup-dentists " placeholder="Tandlæge" value="<?php echo $decleration->dentistName ?>">
+								<input type="hidden" id="dentistId" value="<?php echo $decleration->dentistId ?>">
 							</div>
 							
 						
 						
 
 							<div class="form-group">
-								<input type="text" id="patientName" class="form-control form-control-sm lookup-patients-inactive" placeholder="Patient">
+								<input type="text" id="patientName" class="form-control form-control-sm lookup-patients-inactive" placeholder="Patient" value="<?php echo $decleration->patientName ?>">
+								<input type="hidden" id="patientId" value="<?php echo $decleration->patientId ?>">
 							</div>
 							
 							<div class="form-group">
 								<div class="row">
 									<div class="col-md-7">
-										<input type="text" id="birth-date" class="form-control form-control-sm" placeholder="Fødselsdato" maxlength="6">
+										<input type="text" id="birth-date" class="form-control form-control-sm" placeholder="Fødselsdato" maxlength="6" value="<?php echo $decleration->birthDate ?>">
 									</div>
 									<div class="col-md-5">
-										<input type="text" id="ssn" class="form-control form-control-sm" placeholder="cpr" maxlength="4">
+										<input type="text" id="ssn" class="form-control form-control-sm" placeholder="cpr" maxlength="4" value="<?php echo $decleration->ssn ?>">
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								<input type="text" id="lot" name="lot" class="form-control form-control-sm" placeholder="Nummer på arbejdsseddel">
+								<input type="text" id="lot" name="lot" class="form-control form-control-sm" placeholder="Nummer på arbejdsseddel" value="<?php echo $decleration->ssn ?>">
 							</div>
 							<div class="form-group">
-								<input type="text" id="note" name="note" class="form-control form-control-sm" placeholder="Kommentar">
+								<input type="text" id="note" name="note" class="form-control form-control-sm" placeholder="Kommentar" value="<?php echo $decleration->note ?>">
 							</div>
 							<div id="type" class="form-group" style="border:1px solid transparent;">
 
-								
+									
+									<?php 
+									$fast_checked = "";
+									$aftagelig_checked = "";
+									if($decleration->type == "Fast"){ $fast_checked = "checked"; }else if($decleration->type == "Aftagelig"){ $aftagelig_checked = "checked"; }  ?>
 								
 									<label class="custom-control custom-radio">
-										<input type="radio" class="custom-control-input" name="type" value="Fast">
+										<input type="radio" class="custom-control-input" name="type" value="Fast" <?php echo $fast_checked ?>>
 										<span class="custom-control-indicator"></span>
 										<span class="custom-control-description">Fast</span>
 									</label>
 
 									<label class="custom-control custom-radio">
-										<input type="radio" class="custom-control-input" name="type" value="Aftagelig">
+										<input type="radio" class="custom-control-input" name="type" value="Aftagelig" <?php echo $aftagelig_checked ?>>
 										<span class="custom-control-indicator"></span>
 										<span class="custom-control-description">Aftagelig</span>
 									</label>
@@ -124,9 +129,29 @@
 
 								<div id="products-added">
 									
+									<?php
+									foreach ($decleration->products as $key => $value) {
+									
+									?>
+
+										<div class="input-group input-group-sm mb15">
+											<input type="text" class="form-control form-control-sm" value="<?php echo $value->name ?>" disabled="">
+											<span class="input-group-btn">
+												<button class="btn btn-danger remove-added-product" type="button"><i class="fa fa-times"></i></button>
+											</span>
+										<input type="hidden" value="<?php echo $value->productId ?>" class="productId">
+										</div>
+
+
+									<?php
+
+									}
+									?>	
 									
 								
 								</div>
+								
+
 								<div class="form-group">
 									<input type="text" id="products" class="form-control form-control-sm lookup-products" placeholder="Produkt">
 									<input type="hidden" class="productId">
@@ -142,20 +167,14 @@
 						
 							
 						
-							<!--
-							<div class="form-group">
-								<div class="input-group date datepicker" style="padding:0px;">
-									<span class="input-group-addon input-sm"><i class="fa fa-calendar"></i></span>
-									<input type="text" class="form-control form-control-sm bg-white" name="eventDate"  value="<?php echo date('Y-m-d', time()); ?>">
-								</div>
-							</div>
-							-->	
+							
 						</div>
 					
 					</div>
 				</div>
 				<div class="card-footer text-right">
-					<button class="btn btn-primary create-decleration">Gem kladde</button>
+					<input type="hidden" id="declerationId" value="<?php echo $decleration->declerationId ?>">
+					<button class="btn btn-primary update-decleration">Gem ændringer</button>
 				</div>
 			</div>
 		</div>
@@ -165,9 +184,9 @@
 
 <script type="text/javascript">
 
-	$(".create-decleration").click(function(){
+	$(".update-decleration").click(function(){
 		
-		$(this).prop('disabled', true);
+		//$(this).prop('disabled', true);
 		
 		var result = true;
 
@@ -179,8 +198,10 @@
 		});
 		
 		var data = {
+			declerationId 	: 	$("#declerationId").val(),
 			workerId 	: 	$("#workerId").val(),
 			dentistId 	: 	$("#dentistId").val(),
+			patientId	: 	$("#patientId").val(),
 			patientName	: 	$("#patientName").val(),
 			birthDate 	: 	$("#birth-date").val(),
 			ssn 		: 	$("#ssn").val(),
@@ -248,13 +269,14 @@
 		//$("#response").html(JSON.stringify(data));
 		$.ajax({
 			method:'post',
-			url: '<?php echo base_url("action/createDecleration") ?>',
+			url: '<?php echo base_url("action/updateDecleration") ?>',
 			data: data,
 			
 		}).done(function(response){
 			if(response != "false"){
 					
 				window.location.href = "<?php echo base_url('decleration/id/') ?>"+response;
+				
 			}
 		});
 

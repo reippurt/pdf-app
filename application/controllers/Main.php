@@ -20,6 +20,14 @@ class Main extends CI_Controller {
 		$this->load->view('main');
 	}
 
+	public function sessions()
+	{
+		$this->_init();
+
+		$this->load->view('sessions');
+	}
+
+
 	public function action()
 	{
 		

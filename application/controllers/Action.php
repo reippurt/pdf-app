@@ -13,13 +13,77 @@ class Action extends CI_Controller {
 
 	}
 
+
+	public function updateDecleration()
+	{
+		if($this->validate->fields() == false){
+			return false;
+		}
+
+
+
+
+		$patientId = $this->input->post('patientId');
+		$patient_data = array(
+			'name' => $this->input->post('patientName'),
+			'birthDate' => $this->input->post('birthDate'),
+			'ssn' => $this->input->post('ssn'),
+		);
+		$this->db->where('patientId', $patientId)->update('patients', $patient_data);
+
+
+
+
+
+		$declerationId = $this->input->post('declerationId');
+		$decleration_data = array(
+			'workerId' => $this->input->post('workerId'),
+			'dentistId' => $this->input->post('dentistId'),
+			'type' => $this->input->post('type'),
+			'lot' => $this->input->post('lot'),
+			'note' => $this->input->post('note'),
+			'deliveryTypeId' => $this->input->post('deliveryTypeId'),
+			'deliveryDate' => $this->input->post('deliveryDate'),
+			'deliveryTime' => $this->input->post('deliveryTime'),
+		);
+		$this->db->where('declerationId', $declerationId)->update('declerations', $decleration_data);
+
+
+
+
+		// delete all dProducts first
+		$this->db->where('declerationId', $declerationId)->delete('dProducts');
+		$products = $this->input->post('products');	
+		foreach ($products as $key => $value) {
+			$this->db->insert('dProducts', array('declerationId' => $declerationId, 'productId' => $value));
+		}
+
+
+		$result = true;
+
+		if($result == true){
+
+			$this->session->set_flashdata('response', array('content'=>'Erklæring opdateret', 'class'=>'success'));
+
+			echo $declerationId;
+		}
+
+	}
+
 	public function createNote($target, $value)
 	{
 
 		if($this->validate->fields()){
 
+			$signatureId = 0;
+			if(get_cookie('workerId') != NULL){
+				$signatureId = get_cookie('workerId');
+			}
+
+
 			$note_data = array(
 				'postTimestamp' => time(),
+				'signatureId' => $signatureId,
 				'target' => $target,
 				'value' => $value,
 				'content' => $this->input->post('content')
@@ -41,7 +105,6 @@ class Action extends CI_Controller {
 	public function switchActive()
 	{
 		$this->handle->switchActive();
-
 		_redirect();
 	}
 
@@ -84,11 +147,18 @@ class Action extends CI_Controller {
 			$this->db->insert('declerations', $decleration_data);
 
 			if($this->db->affected_rows() == 1){
-				$result = $this->db->insert_id();
+				$declerationId = $this->db->insert_id();
 			}
+
+			$products = $this->input->post('products');
+			
+			foreach ($products as $key => $value) {
+				$this->db->insert('dProducts', array('declerationId' => $declerationId, 'productId' => $value));
+			}
+			
 		}
 
-		echo $result;
+		echo $declerationId;
 	}
 
 	public function autocomplete($table, $query = false)

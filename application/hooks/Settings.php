@@ -1,16 +1,32 @@
 <?php
+
 class Settings
 {
+    var $ci;
+
+    public function __construct(){
+
+        $this->ci =& get_instance();
+
+    }
+
+
     function initSettings() {
-        $ci =& get_instance();
-        $ci->load->library('session');
-        $ci->load->helper('url');
-       	
-        if(1==1)
+
+        $this->ci->load->library('session');
+        $this->ci->load->helper('cookie');
+
+        $needle = $this->ci->uri->segment(2);
+
+        $haystack = array('set-user', 'setSignature');
+
+        if($this->ci->session->userdata('logged_in') && get_cookie('signature_name') == NULL && !in_array($needle, $haystack))
         {
-            $ci->session->set_userdata('referer', current_url());   
+
+            redirect('admin/set-user');
+
         }
-     
+
     }
 
 }

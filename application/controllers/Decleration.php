@@ -22,9 +22,10 @@ class Decleration extends CI_Controller {
 	{
 
 		$this->_init();
-		$filter = "declerationId = '".$declerationId."'";
 		
-		$decleration = $this->get->declerations($filter);
+		$where = "declerationId = '".$declerationId."'";
+		
+		$decleration = $this->get->declerations($where);
 
 		$data['decleration'] = $decleration;
 
@@ -35,6 +36,10 @@ class Decleration extends CI_Controller {
 	public function edit($declerationId = false)
 	{
 		$this->_init();
+
+		$data['decleration'] = $this->get->decleration($declerationId);
+
+		$this->load->view('forms/update-decleration', $data);
 
 	}
 
@@ -50,13 +55,28 @@ class Decleration extends CI_Controller {
         $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator(PDF_CREATOR);
             
-            // Add a page
-            $pdf->AddPage();
-            
-            $html = $this->load->view('pdf/decleration', $data, true);
-            
-            $pdf->writeHTML($html, true, false, true, false, '');
-            $pdf->Output();
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/dentist_copy', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');
+       
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/worker_copy', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');        
+       
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/survey', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');        
+       
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/label', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');
+        
+
+        $pdf->Output();
         
 
         

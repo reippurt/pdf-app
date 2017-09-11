@@ -1,11 +1,62 @@
 <?php
 Class Get extends CI_Model{
 
+	public function patient($patientId)
+	{
+		$result = false;
+
+		$query = $this->db->select('p.name as patientName,
+									p.birthDate, 
+									p.ssn,
+									p.postTimestamp
+								')
+						  ->from('patients p')
+						  ->where('patientId', $patientId)
+						  ->get();
+
+		if($query->num_rows() == 1)
+		{
+			$result = $query->row();
+		}
+
+		return $result;
+	}
+
 	public function decleration($declerationId)
 	{
 		$result = false;
 
-		$query = $this->db->get_where('declerations', array('declerationId' => $declerationId));
+		$query = $this->db->select('
+									declerations.type as type,
+									declerations.declerationId as declerationId,
+									declerations.postDate as declerationPostDate,
+									declerations.lot,
+									declerations.note,
+									declerations.deliveryTime,
+									declerations.type as type,
+									declerations.deliveryTypeId,
+									dt.name as deliveryTypeName,
+									d.dentistId as dentistId,
+									d.name as dentistName,
+									c.name as clinicName,
+									declerations.deliveryDate,
+									c.street_name,
+									c.street_number,
+									p.patientId as patientId,
+									p.name as patientName,
+									p.birthDate,
+									p.ssn,
+									w.workerId as workerId,
+									w.name as workerName
+								')
+						  ->from('declerations')
+						  ->join('deliveryTypes dt', 'dt.deliveryTypeId = declerations.deliveryTypeId', 'left')
+						  ->join('dentists d', 'd.dentistId = declerations.dentistId', 'left')
+						  ->join('patients p', 'p.patientId = declerations.patientId', 'left')
+						  ->join('clinics c', 'c.clinicId = d.clinicId', 'left')
+						  ->join('workers w', 'w.workerId = declerations.workerId', 'left')
+						  ->where('declerationId', $declerationId)
+						  ->get();
 
 		if($query->num_rows() == 1)
 		{
@@ -20,11 +71,12 @@ Class Get extends CI_Model{
 	{
 		$result = false;
 
-		$query = $this->db->select('*')
+		$query = $this->db->select('*, workers.name as workerName, notes.postTimestamp as postTimestamp')
 						  ->from('notes')
+						  ->join('workers', 'workers.workerId = notes.signatureId', 'left')
 						  ->where('target', $target)
 						  ->where('value', $value)
-						  ->order_by('postTimestamp', 'desc')
+						  ->order_by('notes.postTimestamp', 'desc')
 						  ->get();
 		if($query->num_rows() > 0)
 		{

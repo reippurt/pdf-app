@@ -1,6 +1,12 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	$("body").on('click', '.remove-added-product', function(){
+
+		$(this).closest('.input-group').remove();
+
+	});
+
 	$(".confirm-form-submit").click(function(e){
 		e.preventDefault();
 		if(confirm('Er du sikker på denne handling?')){
@@ -120,8 +126,21 @@ $(document).ready(function(){
 		source: products
 	}).bind('typeahead:select', function(ev, suggestion) {
 
+		//$(this).closest(".form-group").find('.productId').val(suggestion.productId);
 		
-		$(this).closest(".form-group").find('.productId').val(suggestion.productId);
+		$('.lookup-products').typeahead('val', '');
+		$(this).blur();
+		
+		var template = '<div class="input-group input-group-sm mb15">';
+		template += '<input type="text" class="form-control form-control-sm" value="'+suggestion.name+'" disabled>';
+		template +=	'<span class="input-group-btn">';
+		template +=	'<button class="btn btn-danger remove-added-product" type="button"><i class="fa fa-times"></i></button>';
+		template +=	'</span>';
+		template +=	'<input type="hidden" value="'+suggestion.productId+'" class="productId">';
+		template +=	'</div>';
+
+		$("#products-added").append(template);
+	
 
 	});
 
