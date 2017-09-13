@@ -19,34 +19,53 @@ class Admin extends CI_Controller {
 		$this->output->set_template('default');
 	}
 
+
+	public function dentists($dentistId = false)
+	{
+		$this->_init();
+
+		$data['dentists'] = $this->get->dentists();
+		$view_file = "lists/dentists";		
+		if($dentistId){
+			$data['dentist'] = $this->get->dentists("dentistId = '".$dentistId."'");
+			$view_file = "single-dentist";
+		}
+
+		$this->load->view($view_file, $data);
+	}
+
+
+	public function clinics($clinicId = false)
+	{
+		$this->_init();
+
+		$data['clinics'] = $this->db->get('clinics')->result();
+		$view_file = "lists/clinics";		
+		if($clinicId){
+			$data['clinic'] = $this->get->clinics("clinicId = '".$clinicId."'");
+			$view_file = "single-clinic";
+		}
+
+		$this->load->view($view_file, $data);
+
+	}
+
+
+	public function workers()
+	{
+		$this->_init();
+
+		$data['workers'] = $this->db->get('workers')->result();
+
+		$this->load->view('lists/workers', $data);
+	}
+
 	public function set_user()
 	{
 		$this->_init();
 		$this->load->view('forms/set-user');
 	}
 
-	public function setSignature()
-	{
-
-		$worker = $this->db->get_where('workers', array('workerId' => $this->input->post('workerId') ) )->row();
-
-		$signature_cookie = array(
-			'name'   => 'signature_name',
-			'value'  => $worker->name,                            
-			'expire' => '600',                           
-		);
-		
-		$this->input->set_cookie($signature_cookie);
-
-		$workerId_cookie = array(
-			'name'   => 'workerId',
-			'value'  => $worker->workerId,                            
-			'expire' => '600',                           
-		);
-
-		$this->input->set_cookie($workerId_cookie);
-
-		_redirect();
-	}
+	
 
 }

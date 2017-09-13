@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 pt20 pb20">
-			<h1>Arkiv <span class="badge badge-primary"><?php echo count($declerations) ?></span></h1>
+			<h3>Arkiv <span class="badge badge-secondary"><?php echo count($declerations) ?></span></h3>
 		</div>
 	</div>
 	<div class="row">
@@ -25,15 +25,15 @@
 						
 						<tr class="active-<?php echo $value->active ?>">
 							<td>
-								<a class="btn btn-sm" href="<?php echo base_url('decleration/id/'.$value->declerationId) ?>"><?php echo $value->declerationId ?></a>
+								<a class="btn btn-sm" href="<?php echo base_url('user/patient/'.$value->patientId.'/decleration/'.$value->declerationId) ?>"><?php echo $value->declerationId ?></a>
 							</td>
 							<td><?php echo date('d-m-y', $value->declerationPostTimestamp) ?></td>
 							<td>
-								<p class="mb0"><?php echo $value->patientName ?></p>
+								<p class="mb0"><a href="<?php echo base_url('user/patient/'.$value->patientId) ?>"><?php echo $value->patientName ?></a></p>
 								<p class="mb0 fs12"><?php echo $value->birthDate . "-" . $value->ssn ?></p>
 							</td>
 							<td><?php echo $value->workerName ?></td>
-							<td><?php echo $value->dentistName ?></td>
+							<td><a href="<?php echo base_url('admin/dentists/'.$value->dentistId) ?>"><?php echo $value->dentistName ?></a></td>
 							<td><?php echo $value->lot ?></td>
 							<td>
 								<p class="mb0"><?php echo date('d-m-y', strtotime($value->deliveryDate)) . " kl. " . $value->deliveryTime ?></p>

@@ -27,6 +27,27 @@ class Main extends CI_Controller {
 		$this->load->view('sessions');
 	}
 
+	public function convert($table)
+	{
+		$this->_init();
+
+
+		$this->$table();
+
+	}
+
+	public function dentist()
+	{
+
+		$query = $this->db->select('*')
+						  ->from('dentist')
+						  ->get();
+
+		$dentist = $query->result();
+		$data['dentist'] = $dentist;
+		
+		$this->load->view('convert-dentist', $data);
+	}
 
 	public function action()
 	{

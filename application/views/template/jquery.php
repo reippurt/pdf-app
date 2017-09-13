@@ -1,6 +1,38 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	$(".set-signature").click(function(e){
+		e.preventDefault();
+		
+		url = "<?php echo base_url('action/setSignature') ?>";
+		
+		$.ajax({   
+			type: 'POST',   
+			url: url,   
+			data: $('#form-set-signature').serialize(),
+			context:this
+			
+		}).done(function(response){
+			$("#signature-expires").modal('hide');
+			
+			$(this).html("Tak <i class='fa fa-check'></i> ");
+			
+			setInterval(function(){
+			
+				$(".set-signature").html("Start");
+			
+			},2500);
+
+			var obj = jQuery.parseJSON(response);
+			$("#signature-name").html(obj.signature_name);
+			$("#timer").html(obj.signature_expiration);
+
+		}); 
+	
+		
+	
+	});
+
 	$("body").on('click', '.remove-added-product', function(){
 
 		$(this).closest('.input-group').remove();

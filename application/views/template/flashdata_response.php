@@ -11,13 +11,9 @@ if($response){
 
 ?>
 
-<div class="container mt20">
-	<div class="alert alert-<?php echo $class ?>">
-		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<p class="mb0"><?php echo $response['content']; ?></p>
-
-	</div>
+<div class="alert alert-<?php echo $class ?> mb0">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	<p class="mb0"><?php echo $response['content']; ?></p>
 </div>
-
 
 <?php } ?>

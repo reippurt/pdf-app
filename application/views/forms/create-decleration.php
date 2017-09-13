@@ -1,50 +1,16 @@
-<div class="container">
-	<div class="row">
-		<div id="response" class="col-md-12 pt20 pb20">
-			
-		</div>
+<div class="container-fluid">
+	
+	<div class="pt20 pb20">
+		<h3><i class="fa fa-plus-circle"></i> Opret erklæring</h3>
 	</div>
+
+</div>
+<div class="container">
 	<div class="row">
 
 		<div class="col-md-3">
 
-			<div class="card">
-
-				<div class="card-header bg-white">
-
-					<h6 class="mb0">Pakkelabel</h6>
-
-				</div>
-
-				<div class="card-body">
-
-					<div class="form-group">
-						<select type="text" id="deliveryTypeId" name="note" class="form-control form-control-sm">
-							<option>Vælg levering</option>
-							<option value="1">GLS</option>
-							<option value="2">Bud</option>
-						</select>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group date datepicker" style="padding:0px;">
-							<span class="input-group-addon input-sm"><i class="fa fa-calendar"></i></span>
-							<input type="text" id="deliveryDate" class="form-control form-control-sm bg-white" name="deliveryDate"  placeholder="Dato">
-						</div>
-					</div>	
-
-					<div class="form-group mb0">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-							<input type="text" id="deliveryTime" name="eventTime" class="form-control form-control-sm" placeholder="Klokke">
-						</div>
-					</div>
-
-
-				</div>
-
-			</div>
-
+			
 		</div>
 
 		<div class="col-md-5">
@@ -159,6 +125,34 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-header bg-white">
+					<p class="mb0 lh1">Pakkelabel</p>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<select type="text" id="deliveryTypeId" name="note" class="form-control form-control-sm">
+							<option>Vælg levering</option>
+							<option value="1">GLS</option>
+							<option value="2">Bud</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<div class="input-group date datepicker" style="padding:0px;">
+							<span class="input-group-addon input-sm"><i class="fa fa-calendar"></i></span>
+							<input type="text" id="deliveryDate" class="form-control form-control-sm bg-white" name="deliveryDate"  placeholder="Dato">
+						</div>
+					</div>	
+					<div class="form-group mb0">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+							<input type="text" id="deliveryTime" name="eventTime" class="form-control form-control-sm" placeholder="Klokke">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -254,7 +248,7 @@
 		}).done(function(response){
 			if(response != "false"){
 					
-				window.location.href = "<?php echo base_url('decleration/id/') ?>"+response;
+				window.location.href = "<?php echo base_url() ?>"+response;
 			}
 		});
 

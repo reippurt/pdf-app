@@ -13,6 +13,113 @@ class Action extends CI_Controller {
 
 	}
 
+	public function setSignature()
+	{
+
+		$worker = $this->db->get_where('workers', array('workerId' => $this->input->post('workerId') ) )->row();
+
+		$signature_cookie = array(
+			'name'   => 'signature_name',
+			'value'  => $worker->name,                            
+			'expire' => '600',                           
+		);
+		
+		$this->input->set_cookie($signature_cookie);
+
+		$signature_expiration_cookie = array(
+			'name'   => 'signature_expiration',
+			'value'  => time()+600,                            
+			'expire' => '600',                           
+		);
+		
+		$this->input->set_cookie($signature_expiration_cookie);
+
+		$workerId_cookie = array(
+			'name'   => 'workerId',
+			'value'  => $worker->workerId,                            
+			'expire' => '600',                           
+		);
+
+		$this->input->set_cookie($workerId_cookie);
+
+
+		$signature_data = array(
+			'signature_expiration' => 600 ." sek.",
+			'signature_name' => $worker->name
+		);
+
+		echo json_encode($signature_data);
+
+	
+	}
+
+	public function createWorker()
+	{
+		$validation = $this->validate->fields();
+
+		if($validation)
+		{
+			$this->db->insert('workers', $this->input->post());
+			$workerId = $this->db->insert_id();
+			$this->session->set_flashdata('response', array('content'=>'Tekniker er tilføjet', 'class' => 'success'));
+
+		}
+		_redirect();
+	}
+
+	public function createClinic()
+	{
+		$validation = $this->validate->fields();
+
+		if($validation)
+		{
+			$this->db->insert('clinics', $this->input->post());
+			$clinicId = $this->db->insert_id();
+			$this->session->set_flashdata('response', array('content'=>'Klinik er tilføjet', 'class' => 'success'));
+
+		}
+		redirect("admin/clinics/".$clinicId);
+	}
+
+	public function createDentist()
+	{
+		$validation = $this->validate->fields();
+
+		if($validation)
+		{
+			$this->db->insert('dentists', $this->input->post());
+			$dentistId = $this->db->insert_id();
+			$this->session->set_flashdata('response', array('content'=>'Tandlæge er tilføjet', 'class' => 'success'));
+
+		}
+		redirect("admin/dentists/".$dentistId);
+	}
+
+	public function updateDentist($dentistId)
+	{
+		$validation = $this->validate->fields();
+
+		if($validation)
+		{
+			$this->db->where('dentistId', $dentistId)->update('dentists', $this->input->post());
+			$this->session->set_flashdata('response', array('content'=>'Tandlæge er opdateret', 'class' => 'success'));
+		}
+		_redirect();
+	}
+
+	public function updateClinic($clinicId)
+	{
+		$validation = $this->validate->fields();
+
+		if($validation)
+		{
+			$this->db->where('clinicId', $clinicId)->update('clinics', $this->input->post());
+			$this->session->set_flashdata('response', array('content'=>'Klinik er opdateret', 'class' => 'success'));
+		}
+
+		_redirect();
+	}
+
 
 	public function updateDecleration()
 	{
@@ -65,8 +172,10 @@ class Action extends CI_Controller {
 
 			$this->session->set_flashdata('response', array('content'=>'Erklæring opdateret', 'class'=>'success'));
 
-			echo $declerationId;
+			echo "user/patient/".$patientId . "/decleration/" . $declerationId;
+		
 		}
+
 
 	}
 
@@ -158,7 +267,7 @@ class Action extends CI_Controller {
 			
 		}
 
-		echo $declerationId;
+		echo "user/patient/".$patientId . "/decleration/" . $declerationId;
 	}
 
 	public function autocomplete($table, $query = false)

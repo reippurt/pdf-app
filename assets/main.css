@@ -1,5 +1,5 @@
-.card-sm .card-body{
-  padding: 10px;
+.navbar-main{
+  background-color:#366496!important;
 }
 
 .table-delivery tr td{ 
@@ -19,6 +19,7 @@ body, html {
     padding: 0;
     margin: 0;
     background-color: #e9ebee;
+    padding-bottom: 100px;
 }
 
 

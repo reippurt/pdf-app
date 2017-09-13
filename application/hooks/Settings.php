@@ -15,6 +15,9 @@ class Settings
 
         $this->ci->load->library('session');
         $this->ci->load->helper('cookie');
+        $this->ci->load->helper('url');
+
+        $this->ci->session->set_userdata('referer', current_url());
 
         $needle = $this->ci->uri->segment(2);
 
@@ -23,7 +26,7 @@ class Settings
         if($this->ci->session->userdata('logged_in') && get_cookie('signature_name') == NULL && !in_array($needle, $haystack))
         {
 
-            redirect('admin/set-user');
+            //redirect('admin/set-user');
 
         }
 

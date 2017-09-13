@@ -1,46 +1,36 @@
 <div class="container">
-	<div class="row">
-		<div id="response" class="col-md-12 pt20 pb20">
-			
+	<div class="row pt20 ">
+		<div class="col-md-12">
+			<h4 class="mb20">Redigér Erklæring [ID:<?php echo $decleration->declerationId; ?>]</h4>
 		</div>
+		<!--
+		<div class="col-md-9">
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a class="nav-link active" href="#">Active</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#">Disabled</a>
+				</li>
+			</ul>
+		</div>
+	-->
 	</div>
 	<div class="row">
 
 		<div class="col-md-3">
-
 			<div class="card">
-
-				<div class="card-header bg-white">
-
-					<h6 class="mb0">Pakkelabel</h6>
-
-				</div>
 
 				<div class="card-body">
 
-					<div class="form-group">
-						<select type="text" id="deliveryTypeId" name="note" class="form-control form-control-sm">
-							<option value="<?php echo $decleration->deliveryTypeId ?>"><?php echo $decleration->deliveryTypeName ?></option>
-							<option value="1">GLS</option>
-							<option value="2">Bud</option>
-						</select>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group date datepicker" style="padding:0px;">
-							<span class="input-group-addon input-sm"><i class="fa fa-calendar"></i></span>
-							<input type="text" id="deliveryDate" class="form-control form-control-sm bg-white" name="deliveryDate"  placeholder="Dato" value="<?php echo $decleration->deliveryDate; ?>">
-						</div>
-					</div>	
-
-					<div class="form-group mb0">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-							<input type="text" id="deliveryTime" name="eventTime" class="form-control form-control-sm" placeholder="Klokke" value="<?php echo $decleration->deliveryTime ?>">
-						</div>
-					</div>
-
-
+					<a class="btn btn-sm btn-block btn-light text-left mb15" href="<?php echo base_url('user/patient/'.$decleration->patientId."/decleration/".$decleration->declerationId) ?>">Afbryd</a>
+					<button class="btn btn-sm btn-primary btn-block text-left update-decleration pointer">Gem ændringer</button>
 				</div>
 
 			</div>
@@ -68,11 +58,13 @@
 									$workerName = get_cookie('signature_name'); 
 								} ?>
 
+								<p class="fs10 text-muted lh1 mb0">Tekniker</p>
 								<input type="text" id="workerName" class="form-control form-control-sm lookup-workers" placeholder="Tekniker" value="<?php echo $decleration->workerName ?>">
 								<input type="hidden" id="workerId" value="<?php echo $decleration->workerId ?>">
 							</div>
 
 							<div class="form-group">
+								<p class="fs10 text-muted lh1 mb0">Tandlæge</p>
 								<input type="text" id="dentistName" class="form-control form-control-sm lookup-dentists " placeholder="Tandlæge" value="<?php echo $decleration->dentistName ?>">
 								<input type="hidden" id="dentistId" value="<?php echo $decleration->dentistId ?>">
 							</div>
@@ -81,6 +73,7 @@
 						
 
 							<div class="form-group">
+								<p class="fs10 text-muted lh1 mb0">Patient</p>
 								<input type="text" id="patientName" class="form-control form-control-sm lookup-patients-inactive" placeholder="Patient" value="<?php echo $decleration->patientName ?>">
 								<input type="hidden" id="patientId" value="<?php echo $decleration->patientId ?>">
 							</div>
@@ -88,17 +81,21 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-md-7">
+										<p class="fs10 text-muted lh1 mb0">Fødselsdato</p>
 										<input type="text" id="birth-date" class="form-control form-control-sm" placeholder="Fødselsdato" maxlength="6" value="<?php echo $decleration->birthDate ?>">
 									</div>
 									<div class="col-md-5">
+										<p class="fs10 text-muted lh1 mb0">CPR</p>
 										<input type="text" id="ssn" class="form-control form-control-sm" placeholder="cpr" maxlength="4" value="<?php echo $decleration->ssn ?>">
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
+								<p class="fs10 text-muted lh1 mb0">Nummber på arbejdsseddel</p>
 								<input type="text" id="lot" name="lot" class="form-control form-control-sm" placeholder="Nummer på arbejdsseddel" value="<?php echo $decleration->ssn ?>">
 							</div>
 							<div class="form-group">
+								<p class="fs10 text-muted lh1 mb0">Kommentar</p>
 								<input type="text" id="note" name="note" class="form-control form-control-sm" placeholder="Kommentar" value="<?php echo $decleration->note ?>">
 							</div>
 							<div id="type" class="form-group" style="border:1px solid transparent;">
@@ -174,9 +171,50 @@
 				</div>
 				<div class="card-footer text-right">
 					<input type="hidden" id="declerationId" value="<?php echo $decleration->declerationId ?>">
-					<button class="btn btn-primary update-decleration">Gem ændringer</button>
+					
 				</div>
 			</div>
+		</div>
+		<div class="col-md-4">
+
+
+			<div class="card">
+
+				<div class="card-header bg-white">
+
+					<h6 class="mb0">Pakkelabel</h6>
+
+				</div>
+
+				<div class="card-body">
+
+					<div class="form-group">
+						<select type="text" id="deliveryTypeId" name="note" class="form-control form-control-sm">
+							<option value="<?php echo $decleration->deliveryTypeId ?>"><?php echo $decleration->deliveryTypeName ?></option>
+							<option value="1">GLS</option>
+							<option value="2">Bud</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group date datepicker" style="padding:0px;">
+							<span class="input-group-addon input-sm"><i class="fa fa-calendar"></i></span>
+							<input type="text" id="deliveryDate" class="form-control form-control-sm bg-white" name="deliveryDate"  placeholder="Dato" value="<?php echo $decleration->deliveryDate; ?>">
+						</div>
+					</div>	
+
+					<div class="form-group mb0">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+							<input type="text" id="deliveryTime" name="eventTime" class="form-control form-control-sm" placeholder="Klokke" value="<?php echo $decleration->deliveryTime ?>">
+						</div>
+					</div>
+
+
+				</div>
+
+			</div>
+
 		</div>
 	</div>
 </div>
@@ -275,7 +313,7 @@
 		}).done(function(response){
 			if(response != "false"){
 					
-				window.location.href = "<?php echo base_url('decleration/id/') ?>"+response;
+				window.location.href = "<?php echo base_url() ?>"+response;
 				
 			}
 		});

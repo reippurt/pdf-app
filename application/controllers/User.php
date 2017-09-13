@@ -22,18 +22,37 @@ class User extends CI_Controller {
 	}
 	
 
-	public function patient($patientId)
+	public function patient($patientId, $view_file = false, $value = false, $edit = false)
 	{
 		$this->_init();
 
-		
-
 		$data['patient'] = $this->get->patient($patientId);
 
-		$filter = "p.patientId = '".$patientId."'";
-		$data['declerations'] = $this->get->declerations($filter);
+		if($value){
+			$data[$view_file] = $this->get->$view_file($value);
+		}
+		
+		if(!$view_file){
+			
+			$view = "single-patient";
+			
+			$filter = "p.patientId = '".$patientId."'";
+			$data['declerations'] = $this->get->declerations($filter);
 
-		$this->load->view('single-patient', $data);
+			
+
+		}
+		else if($view_file && $value && !$edit)
+		{
+			$view = "single-" . $view_file;
+		}
+		else
+		{
+			$view = "forms/update-decleration";
+		}
+		
+		$this->load->view('template/navbar-patient', $data);
+		$this->load->view($view, $data);
 
 	}
 

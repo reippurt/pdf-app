@@ -18,21 +18,7 @@ class Decleration extends CI_Controller {
 		$this->output->set_template('default');
 	}
 
-	public function id($declerationId = false)
-	{
-
-		$this->_init();
-		
-		$where = "declerationId = '".$declerationId."'";
-		
-		$decleration = $this->get->declerations($where);
-
-		$data['decleration'] = $decleration;
-
-		$this->load->view('single-decleration', $data);
-	}
-
-
+	
 	public function edit($declerationId = false)
 	{
 		$this->_init();

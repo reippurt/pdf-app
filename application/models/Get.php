@@ -1,11 +1,72 @@
 <?php
 Class Get extends CI_Model{
 
+	public function dentists($params = false)
+	{
+		$result = false;
+
+		$query = $this->db->select('*, dentists.active as active, dentists.name as dentistName, clinics.name as clinicName')
+						  ->from('dentists')
+						  ->join('clinics', 'clinics.clinicId = dentists.clinicId', 'left');
+		
+		if($params)				  
+		{
+			$query = $this->db->where($params);
+		}
+
+		$query = $this->db->get();
+		
+		$row_count = $query->num_rows();
+
+		if($row_count == 1)
+		{
+			$result = $query->row();
+		}
+		else if($row_count > 1)
+		{
+			$result = $query->result();
+		}
+
+		return $result;
+	}
+
+	public function clinics($params = false)
+	{
+		$result = false;
+
+		$query = $this->db->select('*, c.name as clinicName')
+						  ->from('clinics c');
+		
+		if($params)				  
+		{
+			$query = $this->db->where($params);
+		}
+
+		$query = $this->db->get();
+		
+		$row_count = $query->num_rows();
+
+		if($row_count == 1)
+		{
+			$result = $query->row();
+		}
+		else if($row_count > 1)
+		{
+			$result = $query->result();
+		}
+
+		return $result;
+	}
+
+
+
+
 	public function patient($patientId)
 	{
 		$result = false;
 
-		$query = $this->db->select('p.name as patientName,
+		$query = $this->db->select('p.patientId as patientId,
+									p.name as patientName,
 									p.birthDate, 
 									p.ssn,
 									p.postTimestamp
@@ -27,9 +88,11 @@ Class Get extends CI_Model{
 		$result = false;
 
 		$query = $this->db->select('
+									declerations.active as active,
 									declerations.type as type,
 									declerations.declerationId as declerationId,
 									declerations.postDate as declerationPostDate,
+									declerations.postTimestamp as declerationPostTimestamp,
 									declerations.lot,
 									declerations.note,
 									declerations.deliveryTime,
@@ -122,6 +185,7 @@ Class Get extends CI_Model{
 									p.birthDate,
 									p.ssn,
 									w.name as workerName,
+									dt.dentistId as dentistId,
 									dt.name as dentistName,
 									dlt.name as deliveryTypeName
 									')

@@ -28,5 +28,6 @@
 <?php $this->load->view('template/flashdata_response') ?>
 <?php echo $output;?>
 <?php $this->load->view('template/jquery') ?>
+<?php $this->load->view('template/signature-control') ?>
 </body>
 </html>
