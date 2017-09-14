@@ -17,7 +17,15 @@ class Settings
         $this->ci->load->helper('cookie');
         $this->ci->load->helper('url');
 
-        $this->ci->session->set_userdata('referer', current_url());
+            
+        $prevent_refer = array('makePdf', 'autocomplete');
+        $active_refer = $this->ci->uri->segment(2);
+       
+        if(!in_array($active_refer, $prevent_refer)){
+            $this->ci->session->set_userdata('referer', current_url());
+        }
+
+       
 
         $needle = $this->ci->uri->segment(2);
 

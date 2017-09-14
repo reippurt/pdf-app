@@ -28,17 +28,62 @@
 		
 		<div class="col-md-3">
 			
+
+			<?php if($approved_declerations){ ?>
+	
+				<div class="card card-sm mb20">
+					<div class="card-header bg-success text-white">
+
+						<p class="mb0 lh1">Godkendte erklæringer</p>
+
+					</div>
+					<div class="card-body">
+
+						<table class="table table-sm">
+							
+
+							<?php foreach ($approved_declerations as $key => $value) { ?>
+							
+							<tr>
+								<td class="fs12">
+									<?php echo date('d/m/y', $value->postTimestamp); ?>
+									<br>
+									<span class="fs10 text-muted lh1"><?php echo $value->name ?></span>
+								</td>
+								<td class="fs12 text-right"><a target="_blank" href="<?php echo base_url('assets/declerations/'.$value->fileName) ?>">Download</a></td>
+							</tr>
+								
+								
+
+
+							<?php } ?>
+						</table>
+
+					</div>
+
+				</div>					
+
+
+			<?php } ?>
+
 			<div class="card mb20">
-				
+
 				<div class="card-body">
 					
+					<form method="post" action="<?php echo base_url('action/approveDecleration'); ?>">
+
+						<input type="hidden" name="declerationId" value="<?php echo $decleration->declerationId ?>">
+						<button class="btn btn-block btn-warning mb30">Godkend PDF</button>
+						
+					</form>
 					
-					
-					<a target="_blank" href="<?php echo base_url('decleration/makePdf/'.$decleration->declerationId) ?>" class="btn btn-sm btn-block btn-light text-left">Vis pdf</a>
+					<a target="_blank" href="<?php echo base_url('decleration/makePdf/'.$decleration->declerationId) ?>" class="btn btn-sm btn-block btn-light text-left">PDF visning</a>
 					
 					<a  class="btn btn-sm btn-block btn-light text-left" href="<?php echo base_url('user/patient/'.$decleration->patientId.'/decleration/'.$decleration->declerationId."/update"); ?>">Redigér</a>
 					
-					<a class="btn btn-sm btn-block btn-light text-left mb10">Email</a>
+					<a class="btn btn-sm btn-block btn-light text-left mb10">Email
+						<span class="float-right text-muted">Ikke implementeret</span>
+					</a>
 					
 					<?php
 
@@ -56,7 +101,7 @@
 						<input type="hidden" name="column" value="declerationId">
 						<input type="hidden" name="row" value="<?php echo $decleration->declerationId ?>">
 						<input type="hidden" name="referer" value="<?php echo current_url() ?>">
-						<button type="submit" class="btn btn-sm btn-light btn-block confirm-form-submit text-left mb10" href="#0"><?php echo $trash_button ?> <i class='fa fa-trash'></i></button>
+						<button type="submit" class="btn btn-sm btn-light btn-block confirm-form-submit text-left" href="#0"><?php echo $trash_button ?> <i class='fa fa-trash'></i></button>
 					</form>
 					
 
@@ -68,7 +113,7 @@
 							
 
 							?>
-							
+							<div class="mb10"></div>
 							<form method="post" action="<?php echo base_url('action/deleteRecord'); ?>">
 								<input type="hidden" name="table" value="declerations">
 								<input type="hidden" name="column" value="declerationId">

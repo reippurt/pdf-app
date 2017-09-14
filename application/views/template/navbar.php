@@ -15,6 +15,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="<?php echo base_url('document/archive') ?>"><i class="fa fa-database"></i> Arkiv</a>
 			</li>
+			<form class="form-inline">
+					<input type="text" class="form-control form-control-sm lookup-patients" placeholder="Find patient">
+			</form>
 			<li class="nav-item">
 				<a class="nav-link" href="<?php echo base_url('admin/dentists') ?>"><i class="fa fa-user-md"></i> Tandlæge</a>
 			</li>

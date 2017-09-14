@@ -28,7 +28,7 @@
 
 		<div class="col-md-3">
 			<div class="card card-sm">
-				<div class="card-header bg-white lh1">Patient ID <?php echo $patient->patientId ?></div>
+				<div class="card-header bg-white lh1"><i class="fa fa-user-o"></i> Patient ID <?php echo $patient->patientId ?></div>
 				<div class="card-body">
 					<p class="mb0"><?php echo $patient->patientName ?></p>
 					<p class="mb0"><?php echo $patient->birthDate . "-" . $patient->ssn; ?></p>
@@ -39,10 +39,12 @@
 		<div class="col-md-5">
 
 			<?php
-			//var_dump($declerations);
+			
+			if($declerations){
 			
 			$count_declerations = count($declerations);		
 			
+
 			if($count_declerations == 1)
 			{
 				$declerations = array($declerations);
@@ -51,11 +53,14 @@
 			foreach ($declerations as $key => $value) { 
 
 				$data['decleration'] = $value;
-				?>
+			
+			?>
 
 				<?php $this->load->view('includes/decleration-summary', $data); ?>
 			
-			<?php } ?>			
+			<?php } 
+		}
+			?>			
 
 		</div>
 

@@ -1,6 +1,27 @@
 <?php
 Class Get extends CI_Model{
 
+
+	public function approvedDeclerations($declerationId)
+	{
+		$result = false;
+
+		$query = $this->db->select('*, ad.postTimestamp as postTimestamp')
+						  ->from('approvedDeclerations as ad')
+						  ->join('workers', 'workers.workerId = ad.workerId', 'left')
+						  ->where('declerationId', $declerationId)
+						  ->order_by('ad.postTimestamp', 'desc')
+						  ->get();
+
+		if($query->num_rows() > 0)
+		{
+			$result = $query->result();
+		}
+
+		return $result;
+
+	}
+
 	public function dentists($params = false)
 	{
 		$result = false;
@@ -150,15 +171,21 @@ Class Get extends CI_Model{
 
 	}
 
-	public function likeName($table, $query)
+	public function likeName($table, $query_string)
 	{
 		$result = false;
 
 		$query = $this->db->select('*')
 						  ->from($table)
 						  ->where('active', 1)
-						  ->like('name', $query)
-						  ->order_by("name", "asc")
+						  ->like('name', $query_string);
+		
+		if($table == "patients")
+		{
+			$query = $this->db->or_like('birthDate', $query_string);
+		}
+
+		$query = $this->db->order_by("name", "asc")
 						  ->get();
 
 		if($query->num_rows() > 0)
@@ -190,7 +217,7 @@ Class Get extends CI_Model{
 									dlt.name as deliveryTypeName
 									')
 						  ->from('declerations d')
-						  ->join('patients p', 'p.patientId = d.patientId', 'left')
+						  ->join('patients p', 'p.patientId = d.patientId')
 						  ->join('workers w', 'w.workerId = d.workerId', 'left')
 						  ->join('dentists dt', 'd.dentistId = dt.dentistId', 'left')
 						  ->join('deliveryTypes as dlt', 'dlt.deliveryTypeId = d.deliveryTypeId', 'left');
@@ -212,9 +239,12 @@ Class Get extends CI_Model{
 		{
 			$result = $query->result();
 		}
-	
-		$result = $this->handle->attachProducts($result);
+		
+		if($count > 0){
+			$result = $this->handle->attachProducts($result);
+		}
 
+	
 		return $result;
 	}
 

@@ -63,9 +63,6 @@ class Decleration extends CI_Controller {
         
 
         $pdf->Output();
-        
-
-        
 
 	}
 

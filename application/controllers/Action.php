@@ -13,6 +13,61 @@ class Action extends CI_Controller {
 
 	}
 
+	public function approveDecleration()
+	{
+
+		$this->load->library("Pdf");
+
+        $declerationId = $this->input->post('declerationId');
+        
+        $data['decleration'] = $this->get->decleration($declerationId);
+
+
+        $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetCreator(PDF_CREATOR);
+            
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/dentist_copy', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');
+       
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/worker_copy', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');        
+       
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/survey', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');        
+       
+        // Add a page
+        $pdf->AddPage();
+        $html = $this->load->view('pdf/label', $data, true);
+        $pdf->writeHTML($html, true, false, true, false, '');
+        
+
+        $directory = "C:/Users/Marius/Documents/reipurth_dental_app/assets/declerations/";
+        //$directory = "C:\Users\Marius\Documents\reipurth_dental_app\assets\declerations\";
+       	//$directory =  $_SERVER['DOCUMENT_ROOT'];
+        $timestamp = time();
+        $file_name = "t-". $timestamp . "_id-".$declerationId.".pdf";
+
+		$pdf->Output( $directory . $file_name, 'F');
+
+		$approved_decleration_data = array(
+			'postTimestamp' => $timestamp,
+			'declerationId' => $declerationId,
+			'fileName' => $file_name,
+			'workerId' => get_cookie('workerId')
+		);
+
+		$this->db->insert('approvedDeclerations', $approved_decleration_data);
+
+		_redirect();
+
+	}
+
 	public function setSignature()
 	{
 
@@ -276,6 +331,8 @@ class Action extends CI_Controller {
 
 		echo json_encode($response);
 	}
+
+	
 
 	public function login()
 	{

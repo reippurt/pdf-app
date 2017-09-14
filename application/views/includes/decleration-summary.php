@@ -1,8 +1,8 @@
 <div class="card mb20">
-	<div class="card-header bg-white">
-		<p class="mb0 lh1">
-			<a href="<?php echo base_url('user/patient/'.$decleration->patientId."/decleration/".$decleration->declerationId) ?>">Erklæring ID <?php echo $decleration->declerationId; ?></a>
-		</p>
+	<div class="card-header">
+
+		<a href="<?php echo base_url('user/patient/'.$decleration->patientId."/decleration/".$decleration->declerationId) ?>">Erklæring ID <?php echo $decleration->declerationId ?></a>
+
 	</div>
 	<div class="card-body">
 		<style type="text/css">
@@ -60,15 +60,18 @@
 			<?php } } ?>
 	
 				<tr>
-					<td class="fs12">Oprettet</td>
-					<td class="fs12 text-muted"><?php echo date('d. M Y', $decleration->declerationPostTimestamp) ?> kl. <?php echo date('G:i', $decleration->declerationPostTimestamp) ?></td>
-				</tr>			
 
 		</table>
 						
 	</div>	
-	<div class="card-footer text-right">
-	
+	<div class="card-footer">
+			
+			<p class="fs12 text-muted mb0">
+				Oprettet: <?php echo date('d. M Y', $decleration->declerationPostTimestamp) ?> kl. <?php echo date('G:i', $decleration->declerationPostTimestamp) ?>
+				<span class="float-right">
+					<a href="<?php echo base_url('user/patient/'.$decleration->patientId."/decleration/".$decleration->declerationId) ?>">Se erklæring</a>
+				</span>
+			</p>
 			
 
 	</div>	

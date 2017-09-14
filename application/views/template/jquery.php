@@ -82,17 +82,6 @@ $(document).ready(function(){
 		}
 	});
 	
-
-	var patients = new Bloodhound({
-		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		prefetch: '<?php echo base_url("action/autocomplete/patients/") ?>',
-		remote: {
-			url: '<?php echo base_url("action/autocomplete/patients/%QUERY") ?>',
-			wildcard: '%QUERY'
-		}
-	});
-
 	
 
 
@@ -188,19 +177,30 @@ $(document).ready(function(){
 
 
 
+	var patients = new Bloodhound({
+		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		prefetch: '<?php echo base_url("action/autocomplete/patients/") ?>',
+		remote: {
+			url: '<?php echo base_url("action/autocomplete/patients/%QUERY") ?>',
+			wildcard: '%QUERY'
+		}
+	});
 
 	$('.lookup-patients').typeahead({
-		minLength: 0,
+		minLength: 2,
 		highlight: true
 	},
 	{
-		limit: 'Infinity',
+		limit: 10,
 		name: 'name',
 		display: 'name',
 		source: patients
 	}).bind('typeahead:select', function(ev, suggestion) {
-
-		$(this).blur();
+	
+		
+		console.log(suggestion.patientId);
+		window.location.href = "<?php echo base_url() ?>user/patient/"+suggestion.patientId;
 
 	});
 

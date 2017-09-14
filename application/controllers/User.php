@@ -39,12 +39,14 @@ class User extends CI_Controller {
 			$filter = "p.patientId = '".$patientId."'";
 			$data['declerations'] = $this->get->declerations($filter);
 
-			
+
+
 
 		}
 		else if($view_file && $value && !$edit)
 		{
 			$view = "single-" . $view_file;
+			$data['approved_declerations'] = $this->get->approvedDeclerations($value);
 		}
 		else
 		{
